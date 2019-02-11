@@ -62,46 +62,7 @@
           "family": "A"
         }
       },
-      "resources": [
-        {
-          "type": "secrets",
-          "name": "[variables('secretName')]",
-          "apiVersion": "2015-06-01",
-          "tags": {},
-          "properties": {
-            "value": "[parameters('servicePrincipalClientSecret')]"
-          },
-          "dependsOn": [
-            "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
-          ]
-        },
-        {
-          "type": "secrets",
-          "name": "[variables('appInsightKey')]",
-          "apiVersion": "2015-06-01",
-          "tags": {},
-          "properties": {
-            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('AppInsightName')), '2014-08-01').InstrumentationKey]"
-          },
-          "dependsOn": [
-            "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
-            "[parameters('AppInsightName')]"
-          ]
-        },
-        {
-          "type": "secrets",
-          "name": "secretname1",
-          "apiVersion": "2015-06-01",
-          "tags": {},
-          "properties": {
-            "value": "test@123"
-          },
-          "dependsOn": [
-            "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
-            "[parameters('AppInsightName')]"
-          ]
-        }
-      ]
+      "resources": []
     },
     {
       "name": "[parameters('AppInsightName')]",
