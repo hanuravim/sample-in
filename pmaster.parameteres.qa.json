@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storageAccountName": {
-            "value": "gavcuinestoragearmdemo02"
+            "value": "gavcuinestoragearmdemo08"
         },
         "storageAccountType": {
             "value": "Standard_LRS"
@@ -24,13 +24,13 @@
             "value": "PerNode"
         },
         "keyVaultName": {
-            "value": "hanutestkv02"
+            "value": "hanutestkv08"
         },
         "objectId": {
             "value": "ce359e9a-8dd8-44a6-961b-649c46c9d545"
         },
         "servicePrincipalClientSecret": {
-            "value": "****"
+            "value": "ksoHkMcrahdAuq+VtnpgOwu4KCW08sPx940KddRJpO0="
         },
         "sqladministratorLogin": {
             "value": "geinadmin"
@@ -42,7 +42,7 @@
             "value": "northeurope"
         },
         "sqlserverName": {
-            "value": "gav-ne-ine-qa-postgresqlarmdemo02"
+            "value": "gav-ne-ine-qa-postgresqlarmdemo08"
         },
         "sqlskuCapacity": {
             "value": 2
@@ -69,7 +69,7 @@
             "value": "Disabled"
         },
         "redisCacheName": {
-            "value": "hanuredistest02"
+            "value": "hanuredistest08"
         },
         "redisCacheSKU": {
             "value": "Standard"
@@ -93,7 +93,7 @@
             "value": "GAV-NE-INE-APP-GATEWAY-ArmDemo"
         },
         "domainNameLabel": {
-            "value": "gav-ne-ine-qa-armdemo"
+            "value": "gav-ne-ine-qa-armdemo08"
         },
         "applicationGatewaytier": {
             "value": "Standard"
@@ -118,7 +118,7 @@
         },
        
         "applicationGatewaypublicIpAddressName": {
-            "value": "GAV-NE-INE-AG-PIP-armdemo"
+            "value": "GAV-NE-INE-AG-PIP-armdemo08"
         },
         "agwsku": {
             "value": "Basic"
@@ -133,7 +133,7 @@
             "value": 4
         },
         "acrName": {
-            "value": "incrnonprodarmpoc02"
+            "value": "incrnonprodarmpoc08"
         },
         "acrAdminUserEnabled": {
             "value": false
@@ -145,13 +145,13 @@
             "value": "northeurope"
         },
         "aksResourceName": {
-            "value": "GAV-CU-INE-QA-AKSarmdemo01"
+            "value": "GAV-CU-INE-QA-AKSarmdemo08"
         },
         "aksLocation": {
             "value": "northeurope"
         },
         "aksDnsPrefix": {
-            "value": "gavcuineqaaksarmdemo01"
+            "value": "gavcuineqaaksarmdemo08"
         },
         "aksAgentCount": {
             "value": 3
@@ -184,7 +184,7 @@
             "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/DWLnsCzgNo4rXoafDwXRjXBCIyX8m6sPJRVfDSmYgND739wQsfBF/B8RCyU1z+tjmOr+CZYCu6w2FmVL8JDY/aPJC9nDtO5aZSZtAdKJH51PwODsI8E4mthPuC01CxRageEDeEW9u4CCu3HXq6gFBscOEsC1iTYO5gsaxotiGdJS2pYnNHDVTWqhbzi7UPx8xPKJ1M8LKkG2paZLYBHKIhjrxjrAjnnsLkFb/dhfdr9D65Mqf5OGy40X1vQv+rfbLtnpb1DMajlfwQtBQpHY2SnEFbSwQva/l/chyhc4b854Uhpc1XdkIcQYiz7pRagRsJ1u5lMusCAsE5gnGoEJ vplauzon@MININT-BK6A5VR"
         },
         "baseUri": {
-            "value": "https://raw.githubusercontent.com/sandeephanu/CoolStuff/master/in"
+            "value": "https://raw.githubusercontent.com/sandeephanu/sample-in/master"
         },"keyVaultResourceGroupName": {
             "value": "GAV-NE-INE-NP-QA-ARM-POC"
         },
@@ -192,10 +192,10 @@
             "value": "gav-cu-ine-dev-kvrmdemo"
         },
         "automationaccountName": {
-            "value": "gavinautomationaccount02"
+            "value": "gavinautomationaccount08"
         },
         "runbookName": {
-            "value": "dbrunbook02"
+            "value": "dbrunbook08"
         },
         "runbookDescription": {
             "value": "runbook to create db users "
@@ -204,16 +204,16 @@
             "value": "Free"
         },
         "serviceBusNamespaceName": {
-            "value": "servucebusarmdemo01"
+            "value": "servucebusarmdemo08"
         },
         "namespaceAuthorizationRuleName": {
-            "value": "authrulesbp01"
+            "value": "authrulesbp08"
         },
         "sblocation": {
             "value": "northeurope"
         },
         "workflows_GE_IN_LogicApp_name": {
-            "value": "GE-IN-LogicApp"
+            "value": "GE-IN-LogicApp08"
            
         },
         "connections_azureautomation_name": {

@@ -48,7 +48,7 @@
                         "logVerbose": false,
                         "description": "[parameters('runbookDescription')]",
                         "publishContentLink": {
-                            "uri": "https://raw.githubusercontent.com/sandeephanu/CoolStuff/master/in/dbrunbook.py",
+                            "uri": "https://raw.githubusercontent.com/sandeephanu/sample-in/master/dbrunbook.py",
                             "version": "1.0.0.0"
                         }
                     }
