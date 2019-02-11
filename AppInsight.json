@@ -2,7 +2,9 @@
     "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "name": {
+
+        "AppInsightName": {
+
             "type": "string"
         }
     },
@@ -11,21 +13,23 @@
     },
     "resources": [
         {
-            "name": "[parameters('name')]",
+
+            "name": "[parameters('AppInsightName')]",
+
             "type": "microsoft.insights/components",
             "location": "[variables('regionId')]",
             "apiVersion": "2014-08-01",
             "properties": {
-                "ApplicationId": "[parameters('name')]",
+
+                "ApplicationId": "[parameters('AppInsightName')]",
+
                 "Application_Type": "other",
                 "Flow_Type": "Redfield"
             }
         }
     ],
     "outputs": {
-        "check": {
-            "type": "string",
-            "value": "[resourceGroup().location]"
+
         }
     }
 }

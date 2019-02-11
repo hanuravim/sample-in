@@ -4,6 +4,7 @@
   "parameters": {
     "keyVaultName": {
       "type": "string"
+
     },
     "objectId": {
       "type": "string"
@@ -14,6 +15,7 @@
     "AppInsightName": {
       "type": "string"
     },
+
     "sqlserverName": {
       "type": "string"
     },
@@ -62,7 +64,9 @@
           "family": "A"
         }
       },
+
       "resources": []
+
     },
     {
       "name": "[parameters('AppInsightName')]",
