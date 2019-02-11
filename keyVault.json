@@ -1,61 +1,124 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "keyVaultName":{
-            "type": "string"
-        },
-        "objectId":{
-            "type": "string"
-        },
-        "servicePrincipalClientSecret":{
-            "type":"securestring" 
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "keyVaultName": {
+      "type": "string"
     },
-    "variables": {
-        "secretName": "servicePrincipalClientSecret"
+    "objectId": {
+      "type": "string"
     },
-    "resources":[
-        {
-            "type": "Microsoft.KeyVault/vaults",
-            "name": "[parameters('keyVaultName')]",
-            "apiVersion": "2015-06-01",
-            "location": "[resourceGroup().location]",
-            "tags": {},
-            "properties": {
-              "enabledForDeployment": true,
-              "enabledForTemplateDeployment": true,
-              "enabledForDiskEncryption": true,
-              "tenantId": "[subscription().tenantId]",
-              "accessPolicies": [
-                {
-                  "tenantId": "[subscription().tenantId]",
-                  "objectId": "[parameters('objectId')]",
-                  "permissions": {
-                    "keys": ["all" ],
-                    "secrets": [ "all" ]
-                  }
-                }
+    "servicePrincipalClientSecret": {
+      "type": "securestring"
+    },
+    "AppInsightName": {
+      "type": "string"
+    },
+    "sqlserverName": {
+      "type": "string"
+    },
+    "sqladministratorLogin": {
+      "type": "string"
+    },
+    "sqladministratorLoginPassword": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "secretName": "servicePrincipalClientSecret",
+    "appInsightKey": "appInsightKey",
+    "postgressSecretName": "postgressConnectionString",
+    "postgressConnectionString": "[concat('host=',parameters('sqlserverName'),'.postgres.database.azure.com','user=',parameters('sqladministratorLogin'),'@',parameters('sqlserverName'),'dbname=postgres','password=',parameters('sqladministratorLoginPassword'))]",
+    "regionId": "[resourceGroup().location]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "[parameters('keyVaultName')]",
+      "apiVersion": "2015-06-01",
+      "location": "[resourceGroup().location]",
+      "tags": {},
+      "properties": {
+        "enabledForDeployment": true,
+        "enabledForTemplateDeployment": true,
+        "enabledForDiskEncryption": true,
+        "tenantId": "[subscription().tenantId]",
+        "accessPolicies": [
+          {
+            "tenantId": "[subscription().tenantId]",
+            "objectId": "[parameters('objectId')]",
+            "permissions": {
+              "keys": [
+                "all"
               ],
-              "sku": {
-                "name": "standard",
-                "family": "A"
-              }
-            },
-            "resources": [
-              {
-                "type": "secrets",
-                "name": "[variables('secretName')]",
-                "apiVersion": "2015-06-01",
-                "tags": {},
-                "properties": {
-                  "value": "[parameters('servicePrincipalClientSecret')]"
-                },
-                "dependsOn": [
-                  "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
-                ]
-              }
-            ]
+              "secrets": [
+                "all"
+              ]
+            }
+          }
+        ],
+        "sku": {
+          "name": "standard",
+          "family": "A"
         }
-    ]    
-}    
+      },
+      "resources": [
+        {
+          "type": "secrets",
+          "name": "[variables('secretName')]",
+          "apiVersion": "2015-06-01",
+          "tags": {},
+          "properties": {
+            "value": "[parameters('servicePrincipalClientSecret')]"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
+          ]
+        },
+        {
+          "type": "secrets",
+          "name": "[variables('appInsightKey')]",
+          "apiVersion": "2015-06-01",
+          "tags": {},
+          "properties": {
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('AppInsightName')), '2014-08-01').InstrumentationKey]"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
+            "[parameters('AppInsightName')]"
+          ]
+        },
+        {
+          "type": "secrets",
+          "name": "[variables('postgressConnectionString')]",
+          "apiVersion": "2015-06-01",
+          "tags": {},
+          "properties": {
+            "value": "[variables('postgressConnectionString')]"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
+            "[parameters('AppInsightName')]"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "[parameters('AppInsightName')]",
+      "type": "microsoft.insights/components",
+      "location": "[variables('regionId')]",
+      "apiVersion": "2014-08-01",
+      "properties": {
+        "ApplicationId": "[parameters('AppInsightName')]",
+        "Application_Type": "other",
+        "Flow_Type": "Redfield"
+      }
+    }
+  ],
+  "outputs": {
+    "MyAppInsightsInstrumentationKey": {
+      "value": "[reference(resourceId('Microsoft.Insights/components', parameters('AppInsightName')), '2014-08-01').InstrumentationKey]",
+      "type": "string"
+    }
+  }
+}
