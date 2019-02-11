@@ -90,11 +90,11 @@
         },
         {
           "type": "secrets",
-          "name": "[variables('postgressSecretName')]",
+          "name": "secretname1",
           "apiVersion": "2015-06-01",
           "tags": {},
           "properties": {
-            "value": "[variables('postgressConnectionString')]"
+            "value": "test@123"
           },
           "dependsOn": [
             "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
