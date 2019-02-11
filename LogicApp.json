@@ -1,0 +1,243 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_GE_IN_LogicApp_name": {
+            "defaultValue": "GE-IN-LogicApp",
+            "type": "string"
+        },
+        "connections_azureautomation_name": {
+            "defaultValue": "azureautomation",
+            "type": "string"
+        },
+        "automationAccountResourceGroup": {
+            "defaultValue": "GAV-NE-INE-NP-QA-ARM-POC",
+            "type": "string"
+        },
+        "automationAccount_name": {
+            "defaultValue": "GEA-IN-ARMPOCDemo",
+            "type": "string"
+        },
+        "workflows_GE_IN_LogicApp_path": {
+            "defaultValue": "/subscriptions/@{encodeURIComponent('311890e7-f78d-496c-9ca2-f4b4b422fb0f')}/resourceGroups/@{encodeURIComponent('GAV-NE-INE-NP-QA-ARM-POC')}/providers/Microsoft.Automation/automationAccounts/@{encodeURIComponent('GEA-IN-ARMPOCDemo')}/jobs",
+            "type": "string"
+        },
+        "workflows_GE_IN_LogicApp_path_1": {
+            "defaultValue": "/subscriptions/@{encodeURIComponent('311890e7-f78d-496c-9ca2-f4b4b422fb0f')}/resourceGroups/@{encodeURIComponent('GAV-NE-INE-NP-QA-ARM-POC')}/providers/Microsoft.Automation/automationAccounts/@{encodeURIComponent('GEA-IN-ARMPOCDemo')}/jobs/@{encodeURIComponent(body('Create_job')?['properties']?['jobId'])}/output",
+            "type": "string"
+        }
+    },
+    "variables": {
+        "automationAccount_resourceId": "[resourceId(parameters('automationAccountResourceGroup'), 'Microsoft.Automation/automationAccounts', parameters('automationAccount_name'))]"
+    },
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/311890e7-f78d-496c-9ca2-f4b4b422fb0f/resourceGroups/GAV-NE-INE-NP-QA-ARM-POC/providers/Microsoft.Logic/workflows/GE-IN-LogicApp'.",
+            "type": "Microsoft.Logic/workflows",
+            "name": "[parameters('workflows_GE_IN_LogicApp_name')]",
+            "apiVersion": "2017-07-01",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "request": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "rootinfo": {
+                                            "properties": {
+                                                "Tenants": {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                "database": {
+                                                    "items": {
+                                                        "properties": {
+                                                            "Tenants": {
+                                                                "type": "string"
+                                                            },
+                                                            "generatekey": {
+                                                                "type": "string"
+                                                            },
+                                                            "host": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "userkey": {
+                                                                "type": "string"
+                                                            },
+                                                            "userpasskey": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "userkey",
+                                                            "userpasskey",
+                                                            "generatekey",
+                                                            "name",
+                                                            "Tenants"
+                                                        ],
+                                                        "type": "object"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Create_job": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "properties": {
+                                        "parameters": "@triggerBody()"
+                                    }
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azureautomation']['connectionId']"
+                                    }
+                                },
+                                "method": "put",
+                                "path": "[parameters('workflows_GE_IN_LogicApp_path')]",
+                                "queries": {
+                                    "runbookName": "dbProvisioning",
+                                    "wait": true,
+                                    "x-ms-api-version": "2015-10-31"
+                                }
+                            }
+                        },
+                        "Get_job_output": {
+                            "runAfter": {
+                                "Create_job": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azureautomation']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "[parameters('workflows_GE_IN_LogicApp_path_1')]",
+                                "queries": {
+                                    "x-ms-api-version": "2015-10-31"
+                                }
+                            }
+                        },
+                        "Response": {
+                            "runAfter": {
+                                "Get_job_output": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Response",
+                            "inputs": {
+                                "body": "@body('Get_job_output')",
+                                "schema": {
+                                    "properties": {
+                                        "Datbase": {
+                                            "items": {
+                                                "properties": {
+                                                    "DbName": {
+                                                        "type": "string"
+                                                    },
+                                                    "GenratePasskey": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "Tenants": {
+                                                        "items": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "passkey": {
+                                                        "type": "string"
+                                                    },
+                                                    "userkey": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "userkey",
+                                                    "passkey",
+                                                    "GenratePasskey",
+                                                    "DbName",
+                                                    "Tenants"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "statusCode": 200
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azureautomation": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connections_azureautomation_name'))]",
+                                "connectionName": "[parameters('connections_azureautomation_name')]",
+                                "id": "/subscriptions/311890e7-f78d-496c-9ca2-f4b4b422fb0f/providers/Microsoft.Web/locations/northeurope/managedApis/azureautomation"
+                            }
+                        }
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('connections_azureautomation_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/311890e7-f78d-496c-9ca2-f4b4b422fb0f/resourceGroups/GAV-NE-INE-NP-QA-ARM-POC/providers/Microsoft.Web/connections/azureautomation'.",
+            "type": "Microsoft.Web/connections",
+            "name": "[parameters('connections_azureautomation_name')]",
+            "apiVersion": "2016-06-01",
+            "location": "[resourcegroup().location]",
+            "scale": null,
+            "properties": {
+                "displayName": "[parameters('connections_azureautomation_name')]",
+                "customParameterValues": {
+
+
+                },
+                "api": {
+                    "id": "[concat('/subscriptions/311890e7-f78d-496c-9ca2-f4b4b422fb0f/providers/Microsoft.Web/locations/northeurope/managedApis/', 'azureautomation')]"
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}

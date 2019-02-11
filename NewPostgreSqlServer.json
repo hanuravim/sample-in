@@ -1,0 +1,81 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqladministratorLogin": {
+      "type": "string",
+      "defaultValue": "geinadmin"
+    },
+    
+    "sqladministratorLoginPassword": {
+      "type": "securestring"
+    },
+    "sqldblocation": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "sqlserverName": {
+      "type": "string",
+      "defaultValue": "geinpostgrsdb"
+    },
+    "sqlskuCapacity": {
+      "type": "int",
+      "defaultValue": 2
+    },
+    "sqlskuFamily": {
+      "type": "string",
+      "defaultValue": "Gen5"
+    },
+    "sqlskuName": {
+      "type": "string",
+      "defaultValue": "GP_Gen5_2"
+    },
+    "sqlskuSizeMB": {
+      "type": "int",
+      "defaultValue": 5120
+    },
+    "sqlskuTier": {
+      "type": "string",
+      "defaultValue": "GeneralPurpose"
+    },
+    "sqlversion": {
+      "type": "string",
+      "defaultValue": "9.6"
+    },
+    "sqlbackupRetentionDays": {
+      "type": "int",
+      "defaultValue": 7
+    },
+    "sqlgeoRedundantBackup": {
+      "type": "string",
+      "defaultValue": "Disabled"
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2017-12-01",
+      "kind": "",
+      "location": "[parameters('sqldblocation')]",
+      "name": "[parameters('sqlserverName')]",
+      "properties": {
+        "version": "[parameters('sqlversion')]",
+        "administratorLogin": "[parameters('sqladministratorLogin')]",
+        "administratorLoginPassword": "[parameters('sqladministratorLoginPassword')]",
+        "storageProfile": {
+          "storageMB": "[parameters('sqlskuSizeMB')]",
+          "backupRetentionDays": "[parameters('sqlbackupRetentionDays')]",
+          "geoRedundantBackup": "[parameters('sqlgeoRedundantBackup')]"
+        }
+      },
+      "sku": {
+        "name": "[parameters('sqlskuName')]",
+        "tier": "[parameters('sqlskuTier')]",
+        "capacity": "[parameters('sqlskuCapacity')]",
+        "size": "[parameters('sqlskuSizeMB')]",
+        "family": "[parameters('sqlskuFamily')]"
+      },
+      "type": "Microsoft.DBforPostgreSQL/servers"
+    }
+  ],
+  "variables": {}
+}

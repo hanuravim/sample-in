@@ -1,0 +1,240 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountName": {
+            "value": "gavcuinestoragearmdemo02"
+        },
+        "storageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "storageAccountlocation": {
+            "value": "northeurope"
+        },
+        "VnetName": {
+            "value": "GAV-INE-QA-VNET-AKS-armdemo"
+        },
+        "workspaceName": {
+            "value": "GAV-NE-INE-QA-LOGS-armdemo"
+        },
+        "workspaceRegion": {
+            "value": "eastus"
+        },
+        "workspacesku": {
+            "value": "PerNode"
+        },
+        "keyVaultName": {
+            "value": "hanutestkv02"
+        },
+        "objectId": {
+            "value": "ce359e9a-8dd8-44a6-961b-649c46c9d545"
+        },
+        "servicePrincipalClientSecret": {
+            "value": "ksoHkMcrahdAuq+VtnpgOwu4KCW08sPx940KddRJpO0="
+        },
+        "sqladministratorLogin": {
+            "value": "geinadmin"
+        },
+        "sqladministratorLoginPassword": {
+            "value": "admin@123"
+        },
+        "sqldblocation": {
+            "value": "northeurope"
+        },
+        "sqlserverName": {
+            "value": "gav-ne-ine-qa-postgresqlarmdemo02"
+        },
+        "sqlskuCapacity": {
+            "value": 2
+        },
+        "sqlskuFamily": {
+            "value": "Gen5"
+        },
+        "sqlskuName": {
+            "value": "GP_Gen5_2"
+        },
+        "sqlskuSizeMB": {
+            "value": 5120
+        },
+        "sqlskuTier": {
+            "value": "GeneralPurpose"
+        },
+        "sqlversion": {
+            "value": "9.6"
+        },
+        "sqlbackupRetentionDays": {
+            "value": 7
+        },
+        "sqlgeoRedundantBackup": {
+            "value": "Disabled"
+        },
+        "redisCacheName": {
+            "value": "hanuredistest02"
+        },
+        "redisCacheSKU": {
+            "value": "Standard"
+        },
+        "redisCacheFamily": {
+            "value": "C"
+        },
+        "redisCacheCapacity": {
+            "value": 1
+        },
+        "enableNonSslPort": {
+            "value": false
+        },
+        "diagnosticsEnabled": {
+            "value": false
+        },
+        "applicationGatewaylocation": {
+            "value": "northeurope"
+        },
+        "applicationGatewayName": {
+            "value": "GAV-NE-INE-APP-GATEWAY-ArmDemo"
+        },
+        "domainNameLabel": {
+            "value": "gav-ne-ine-qa-armdemo"
+        },
+        "applicationGatewaytier": {
+            "value": "Standard"
+        },
+        "applicationGatewayskuSize": {
+            "value": "Standard_Medium"
+        },
+        "applicationGatewaycapacity": {
+            "value": 2
+        },
+        "applicationGatewayfrontEndPort": {
+            "value": 80
+        },
+        "apgwsubnetName": {
+            "value": "app-gateway"
+        },
+        "applicationGatewayenableHttp2": {
+            "value": false
+        },
+        "applicationGatewayzones": {
+            "value": []
+        },
+       
+        "applicationGatewaypublicIpAddressName": {
+            "value": "GAV-NE-INE-AG-PIP-armdemo"
+        },
+        "agwsku": {
+            "value": "Basic"
+        },
+        "applicationGatewayallocationMethod": {
+            "value": "dynamic"
+        },
+        "applicationGatewaypublicIpZones": {
+            "value": []
+        },
+        "applicationGatewayidleTimeoutInMinutes": {
+            "value": 4
+        },
+        "acrName": {
+            "value": "incrnonprodarmpoc02"
+        },
+        "acrAdminUserEnabled": {
+            "value": false
+        },
+        "acrSku": {
+            "value": "Basic"
+        },
+        "acrlocation": {
+            "value": "northeurope"
+        },
+        "aksResourceName": {
+            "value": "GAV-CU-INE-QA-AKSarmdemo01"
+        },
+        "aksLocation": {
+            "value": "northeurope"
+        },
+        "aksDnsPrefix": {
+            "value": "gavcuineqaaksarmdemo01"
+        },
+        "aksAgentCount": {
+            "value": 3
+        },
+        "aksAgentVMSize": {
+            "value": "Standard_D2_v2"
+        },
+        "aksServicePrincipalClientId": {
+            "value": "c80d3d3a-b0a4-4839-9deb-8ffa9d261fae"
+        },
+        "aksKubernetesVersion": {
+            "value": "1.11.5"
+        },
+        "aksEnableOmsAgent": {
+            "value": false
+        },
+        "aksEnableHttpApplicationRouting": {
+            "value": false
+        },
+        "aksNetworkPlugin": {
+            "value": "kubenet"
+        },
+        "aksMaxPods": {
+            "value": 30
+        },
+        "aksEnableRBAC": {
+            "value": true
+        },
+        "aksSSH": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/DWLnsCzgNo4rXoafDwXRjXBCIyX8m6sPJRVfDSmYgND739wQsfBF/B8RCyU1z+tjmOr+CZYCu6w2FmVL8JDY/aPJC9nDtO5aZSZtAdKJH51PwODsI8E4mthPuC01CxRageEDeEW9u4CCu3HXq6gFBscOEsC1iTYO5gsaxotiGdJS2pYnNHDVTWqhbzi7UPx8xPKJ1M8LKkG2paZLYBHKIhjrxjrAjnnsLkFb/dhfdr9D65Mqf5OGy40X1vQv+rfbLtnpb1DMajlfwQtBQpHY2SnEFbSwQva/l/chyhc4b854Uhpc1XdkIcQYiz7pRagRsJ1u5lMusCAsE5gnGoEJ vplauzon@MININT-BK6A5VR"
+        },
+        "baseUri": {
+            "value": "https://raw.githubusercontent.com/sandeephanu/CoolStuff/master/in"
+        },"keyVaultResourceGroupName": {
+            "value": "GAV-NE-INE-NP-QA-ARM-POC"
+        },
+        "existingkeyvaultName": {
+            "value": "gav-cu-ine-dev-kvrmdemo"
+        },
+        "automationaccountName": {
+            "value": "gavinautomationaccount02"
+        },
+        "runbookName": {
+            "value": "dbrunbook02"
+        },
+        "runbookDescription": {
+            "value": "runbook to create db users "
+        },
+        "automationaccountsku": {
+            "value": "Free"
+        },
+        "serviceBusNamespaceName": {
+            "value": "servucebusarmdemo01"
+        },
+        "namespaceAuthorizationRuleName": {
+            "value": "authrulesbp01"
+        },
+        "sblocation": {
+            "value": "northeurope"
+        },
+        "workflows_GE_IN_LogicApp_name": {
+            "value": "GE-IN-LogicApp"
+           
+        },
+        "connections_azureautomation_name": {
+            "value": "azureautomation"
+           
+        },
+        "automationAccountResourceGroup": {
+            "value": "GAV-NE-INE-NP-QA-ARM-POC"
+            
+        },
+        "automationAccount_name": {
+            "value": "GEA-IN-ARMPOCDemo"
+           
+        },
+        "workflows_GE_IN_LogicApp_path": {
+            "value": "/subscriptions/@{encodeURIComponent('311890e7-f78d-496c-9ca2-f4b4b422fb0f')}/resourceGroups/@{encodeURIComponent('GAV-NE-INE-NP-QA-ARM-POC')}/providers/Microsoft.Automation/automationAccounts/@{encodeURIComponent('GEA-IN-ARMPOCDemo')}/jobs"
+          
+        },
+        "workflows_GE_IN_LogicApp_path_1": {
+            "value": "/subscriptions/@{encodeURIComponent('311890e7-f78d-496c-9ca2-f4b4b422fb0f')}/resourceGroups/@{encodeURIComponent('GAV-NE-INE-NP-QA-ARM-POC')}/providers/Microsoft.Automation/automationAccounts/@{encodeURIComponent('GEA-IN-ARMPOCDemo')}/jobs/@{encodeURIComponent(body('Create_job')?['properties']?['jobId'])}/output"
+           
+        }
+    }
+}

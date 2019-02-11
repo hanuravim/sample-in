@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        
+        "VnetName": {
+            "metadata": {
+                "description": "DNS Prefix for the cluster"
+            },
+            "type": "string"
+        },
+        
+        "objectId": {
+            "metadata": {
+                "description": "Object ID of the Service Principal"
+            },
+            "type": "string"
+        }
+      
+
+    },
+    "variables": {
+        "Network Contributor Role": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '4d97b98b-1d4f-4787-a291-c67834d212e7')]",        
+        "VNET Address Space": "10.0.0.0/8",
+        "Role Assignment Name": "[concat(parameters('VnetName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), variables('Network Contributor Role')))]",
+        "aksSubnetName": "aks-subnet",
+        "apgSubnetName": "app-gateway",
+        "redisSubnetName": "redis",
+        "AKS Subnet Address Space": "10.240.0.0/16",
+        "Redis Subnet Address Space": "10.2.0.0/26",
+        "AppGateway Subnet Address Space":"10.1.0.0/29"
+       
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2017-10-01",
+            "name": "[parameters('VnetName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('VNET Address Space')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name":  "[variables('aksSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('AKS Subnet Address Space')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault"
+                                   
+                                },
+                                {
+                                    "service": "Microsoft.ServiceBus"
+                                    
+                                },
+                                {
+                                   
+                                    "service": "Microsoft.Sql"
+                                    
+                                },
+                                {
+                                    
+                                    "service": "Microsoft.Storage"
+                                   
+                                }
+                            ]
+                        }
+                        
+                        
+                    },
+                    {
+                        "name":    "[variables('apgSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('AppGateway Subnet Address Space')]"
+                        }
+                    },
+                    {
+                        "name":    "[variables('redisSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('Redis Subnet Address Space')]"
+                        }
+                    }
+                ]
+            },
+            "resources": []
+        }
+           
+    ],
+    "outputs": {
+       
+    }
+}

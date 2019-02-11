@@ -1,0 +1,142 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "keyVaultName": {
+            "value": "geinkeyvault002"
+        },
+        "objectId": {
+            "value": "8d35dc90-112c-4652-b59d-3c0557af41a6"
+        },
+        "servicePrincipalClientSecret": {
+            "value": "16172758-643e-4deb-8134-b2637b81ac6d"
+        },
+        "workspaceName": {
+            "value": "geinwrksps002"
+        },
+        "omssku": {
+            "value": "PerNode"
+        },
+        
+        "acrName": {
+            "value": "geinacr002"
+        },
+        "acrAdminUserEnabled": {
+            "value": false
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "acrSku": {
+            "value": "Basic"
+        },
+        "applicationGatewayName": {
+            "value": "geinapgw002"
+        },
+        "tier": {
+            "value": "WAF"
+        },
+        "skuSize": {
+            "value": "WAF_Medium"
+        },
+        "agwsku": {
+            "value": "Basic"
+        },
+        "capacity": {
+            "value": 2
+        },
+        "frontEndPort": {
+            "value": 80
+        },
+        "apgwsubnetName": {
+            "value": "geinsubnet"
+        },
+        "enableHttp2": {
+            "value": false
+        },
+        "zones": {
+            "value": []
+        },
+        "publicIpAddressName": {
+            "value": "geingwpip002"
+        },
+        "allocationMethod": {
+            "value": "dynamic"
+        },
+        "publicIpZones": {
+            "value": []
+        },
+        "idleTimeoutInMinutes": {
+            "value": 4
+        },
+        "virtualNetworkRG": {
+            "value": "test02"
+        },
+        "virtualNetworkName": {
+            "value": "geinvnet"
+        },
+        "administratorLogin": {
+            "value": "admin@abc"
+        },
+        "administratorLoginPassword": {
+            "value": ""
+        },
+        "dblocation": {
+            "value": "northeurope"
+        },
+        "serverName": {
+            "value": "geinpostgrsdb"
+        },
+        "skuCapacity": {
+            "value": 2
+        },
+        "skuFamily": {
+            "value": "Gen5"
+        },
+        "skuName": {
+            "value": "GP_Gen5_2"
+        },
+        "skuSizeMB": {
+            "value": 5120
+        },
+        "skuTier": {
+            "value": "GeneralPurpose"
+        },
+        "version": {
+            "value": "9.6"
+        },
+        "backupRetentionDays": {
+            "value": 7
+        },
+        "geoRedundantBackup": {
+            "value": "Disabled"
+        },
+        "aksResourceName": {
+            "value": ""
+        },
+        
+        "aksDnsPrefix": {
+            "value": "ravidns"
+        },
+        "aksAgentCount": {
+            "value": 3
+        },
+        "aksAgentVMSize": {
+            "value": "Standard_DS2_v2"
+        },
+        "aksServicePrincipalClientId": {
+            "value": "f3a827d2-b32a-4c1e-89ed-0606b7038107"
+        },
+        
+        "aksKubernetesVersion": {
+            "value": "1.11.5"
+        },
+        "aksSSH": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/DWLnsCzgNo4rXoafDwXRjXBCIyX8m6sPJRVfDSmYgND739wQsfBF/B8RCyU1z+tjmOr+CZYCu6w2FmVL8JDY/aPJC9nDtO5aZSZtAdKJH51PwODsI8E4mthPuC01CxRageEDeEW9u4CCu3HXq6gFBscOEsC1iTYO5gsaxotiGdJS2pYnNHDVTWqhbzi7UPx8xPKJ1M8LKkG2paZLYBHKIhjrxjrAjnnsLkFb/dhfdr9D65Mqf5OGy40X1vQv+rfbLtnpb1DMajlfwQtBQpHY2SnEFbSwQva/l/chyhc4b854Uhpc1XdkIcQYiz7pRagRsJ1u5lMusCAsE5gnGoEJ vplauzon@MININT-BK6A5VR"
+        },
+        "VnetName": {
+            "value": "aksvnet1"
+        }
+
+    }
+}

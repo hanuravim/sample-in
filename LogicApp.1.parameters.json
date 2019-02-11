@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_GE_IN_LogicApp_name": {
+            "value": "GE-IN-LogicApp"
+        },
+        "connections_azureautomation_name": {
+            "value": "azureautomation"
+        },
+        "automationAccount_name": {
+            "value": "GEA-IN-ARMPOCDemo"
+        },
+        "connectionTypes_Azure_name": {
+            "value": "Azure"
+        },
+        "connectionTypes_AzureServicePrincipal_name": {
+            "value": "113-GAV-INE-DEV-KV-SP-001"
+        },
+        "workflows_GE_IN_LogicApp_path": {
+            "value": "/subscriptions/@{encodeURIComponent('311890e7-f78d-496c-9ca2-f4b4b422fb0f')}/resourceGroups/@{encodeURIComponent('GAV-NE-INE-NP-QA-ARM-POC')}/providers/Microsoft.Automation/automationAccounts/@{encodeURIComponent('GEA-IN-ARMPOCDemo')}/jobs"
+        },
+        "workflows_GE_IN_LogicApp_path_1": {
+            "value": "/subscriptions/@{encodeURIComponent('311890e7-f78d-496c-9ca2-f4b4b422fb0f')}/resourceGroups/@{encodeURIComponent('GAV-NE-INE-NP-QA-ARM-POC')}/providers/Microsoft.Automation/automationAccounts/@{encodeURIComponent('GEA-IN-ARMPOCDemo')}/jobs/@{encodeURIComponent(body('Create_job')?['properties']?['jobId'])}/output"
+        }
+    }
+}

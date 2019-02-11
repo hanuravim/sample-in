@@ -1,0 +1,176 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "namespaces_sandeep01sb_name": {
+            "defaultValue": "sandeep01sb",
+            "type": "String"
+        },
+        "automationAccounts_sandeeptestaccount_name": {
+            "defaultValue": "sandeeptestaccount",
+            "type": "String"
+        },
+        "modules_Azure_name": {
+            "defaultValue": "Azure",
+            "type": "String"
+        },
+        "modules_AzureRM.Sql_name": {
+            "defaultValue": "AzureRM.Sql",
+            "type": "String"
+        },
+        "runbooks_rubbookdbpy_name": {
+            "defaultValue": "rubbookdbpy",
+            "type": "String"
+        },
+        "connectionTypes_Azure_name": {
+            "defaultValue": "Azure",
+            "type": "String"
+        },
+        "modules_Azure.Storage_name": {
+            "defaultValue": "Azure.Storage",
+            "type": "String"
+        },
+        "modules_AuditPolicyDsc_name": {
+            "defaultValue": "AuditPolicyDsc",
+            "type": "String"
+        },
+        "modules_PSDscResources_name": {
+            "defaultValue": "PSDscResources",
+            "type": "String"
+        },
+        "modules_xDSCDomainjoin_name": {
+            "defaultValue": "xDSCDomainjoin",
+            "type": "String"
+        },
+        "modules_AzureRM.Compute_name": {
+            "defaultValue": "AzureRM.Compute",
+            "type": "String"
+        },
+        "modules_AzureRM.Profile_name": {
+            "defaultValue": "AzureRM.Profile",
+            "type": "String"
+        },
+        "modules_AzureRM.Storage_name": {
+            "defaultValue": "AzureRM.Storage",
+            "type": "String"
+        },
+        "modules_AzureRM.Resources_name": {
+            "defaultValue": "AzureRM.Resources",
+            "type": "String"
+        },
+        "modules_SecurityPolicyDsc_name": {
+            "defaultValue": "SecurityPolicyDsc",
+            "type": "String"
+        },
+        "modules_AzureRM.Automation_name": {
+            "defaultValue": "AzureRM.Automation",
+            "type": "String"
+        },
+        "modules_xRemoteDesktopAdmin_name": {
+            "defaultValue": "xRemoteDesktopAdmin",
+            "type": "String"
+        },
+        "modules_ComputerManagementDsc_name": {
+            "defaultValue": "ComputerManagementDsc",
+            "type": "String"
+        },
+        "AuthorizationRules_RootManageSharedAccessKey_name": {
+            "defaultValue": "RootManageSharedAccessKey",
+            "type": "String"
+        },
+        "modules_GPRegistryPolicyParser_name": {
+            "defaultValue": "GPRegistryPolicyParser",
+            "type": "String"
+        },
+        "modules_Microsoft.PowerShell.Core_name": {
+            "defaultValue": "Microsoft.PowerShell.Core",
+            "type": "String"
+        },
+        "modules_Microsoft.WSMan.Management_name": {
+            "defaultValue": "Microsoft.WSMan.Management",
+            "type": "String"
+        },
+        "modules_xPowerShellExecutionPolicy_name": {
+            "defaultValue": "xPowerShellExecutionPolicy",
+            "type": "String"
+        },
+        "modules_Microsoft.PowerShell.Utility_name": {
+            "defaultValue": "Microsoft.PowerShell.Utility",
+            "type": "String"
+        },
+        "connectionTypes_AzureServicePrincipal_name": {
+            "defaultValue": "AzureServicePrincipal",
+            "type": "String"
+        },
+        "modules_Microsoft.PowerShell.Security_name": {
+            "defaultValue": "Microsoft.PowerShell.Security",
+            "type": "String"
+        },
+        "modules_StateConfigCompositeResources_name": {
+            "defaultValue": "StateConfigCompositeResources",
+            "type": "String"
+        },
+        "connectionTypes_AzureClassicCertificate_name": {
+            "defaultValue": "AzureClassicCertificate",
+            "type": "String"
+        },
+        "modules_Microsoft.PowerShell.Management_name": {
+            "defaultValue": "Microsoft.PowerShell.Management",
+            "type": "String"
+        },
+        "modules_Microsoft.PowerShell.Diagnostics_name": {
+            "defaultValue": "Microsoft.PowerShell.Diagnostics",
+            "type": "String"
+        },
+        "modules_Orchestrator.AssetManagement.Cmdlets_name": {
+            "defaultValue": "Orchestrator.AssetManagement.Cmdlets",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        
+        {
+            "comments": "Generalized from resource: '/subscriptions/311890e7-f78d-496c-9ca2-f4b4b422fb0f/resourceGroups/GAV-IN-NU-TEST-Delete-ARM/providers/Microsoft.ServiceBus/namespaces/sandeep01sb'.",
+            "type": "Microsoft.ServiceBus/namespaces",
+            "sku": {
+                "name": "Premium",
+                "tier": "Premium",
+                "capacity": 1
+            },
+            "name": "[parameters('namespaces_sandeep01sb_name')]",
+            "apiVersion": "2017-04-01",
+            "location": "North Europe",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "metricId": "[concat('311890e7-f78d-496c-9ca2-f4b4b422fb0f:', parameters('namespaces_sandeep01sb_name'))]",
+                "createdAt": "2019-02-10T15:31:46.277Z",
+                "updatedAt": "2019-02-10T15:32:24.23Z",
+                "serviceBusEndpoint": "[concat('https://', parameters('namespaces_sandeep01sb_name'),'.servicebus.windows.net:443/')]",
+                "status": "Active"
+            },
+            "dependsOn": []
+        },        
+        
+        {
+            "comments": "Generalized from resource: '/subscriptions/311890e7-f78d-496c-9ca2-f4b4b422fb0f/resourcegroups/GAV-IN-NU-TEST-Delete-ARM/providers/Microsoft.ServiceBus/namespaces/sandeep01sb/AuthorizationRules/RootManageSharedAccessKey'.",
+            "type": "Microsoft.ServiceBus/namespaces/AuthorizationRules",
+            "name": "[concat(parameters('namespaces_sandeep01sb_name'), '/', parameters('AuthorizationRules_RootManageSharedAccessKey_name'))]",
+            "apiVersion": "2017-04-01",
+            "location": "North Europe",
+            "scale": null,
+            "properties": {
+                "rights": [
+                    "Listen",
+                    "Manage",
+                    "Send"
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_sandeep01sb_name'))]"
+            ]
+        }
+    ]
+}

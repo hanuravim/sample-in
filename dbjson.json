@@ -1,0 +1,23 @@
+{
+    "rootinfo":{
+      
+      "database":[
+         {
+                "kvkey": "passwordkey231407",
+                "generatekey":"false",
+                "host":"dbhostconstring",
+                "name": "newnoo",
+                "tenants":"false"
+            },
+            {
+                "kvkey": "userkey4327",
+                "userpasskey": "passwordkey23107",
+                "generatekey":"false",
+                "name": "mastert",
+                "tenants":"true"
+            }
+            
+       ],
+      "tenants":[{"name": "coy"},{"name": "coh"}]        
+    }
+    }

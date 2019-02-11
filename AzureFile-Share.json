@@ -1,0 +1,37 @@
+"diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('diagnosticStorageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
+          }
+        }
+        },
+        "resources": [
+          {
+            "name": "AzureFileShares",
+            "type": "extensions",
+            "location": "[variables('location')]",
+            "apiVersion": "2016-03-30",
+            "dependsOn": [
+              "[resourceId('Microsoft.Compute/virtualMachines', parameters('VMName'))]",
+              "[variables('AzureFilesStorageId')]"
+            ],
+            "tags": {
+              "displayName": "AzureFileShares"
+            },
+            "properties": {
+              "publisher": "Microsoft.Compute",
+              "type": "CustomScriptExtension",
+              "typeHandlerVersion": "1.4",
+              "autoUpgradeMinorVersion": true,
+              "settings": {
+                "fileUris": [
+                  "https://raw.githubusercontent.com/sandeephanu/CoolStuff/master/in/azureFile.ps1?token=Aok8Hj5YjJpi3WL4vyqEfVFk64FbatUoks5b6RrtwA%3D%3D"
+                ]
+              },
+              "protectedSettings": {
+               "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ','azureFile.ps1 -SAName ',parameters('AzureFilesStorageName'),'  -SAKey ', listKeys(resourceId(variables('AzureFilesStorageAccountResourceGroup'),'Microsoft.Storage/storageAccounts', parameters('AzureFilesStorageName')), '2015-06-15').key1)]" 
+             }
+            }
+          }
+        ]
+    },

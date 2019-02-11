@@ -1,0 +1,190 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountName": {
+            "value": "ravistrg01"
+        },
+        "storageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "storageAccountlocation": {
+            "value": "northeurope"
+        },
+        "VnetName": {
+            "value": "GAV-INE-QA-VNET-AKS-armdemo01"
+        },
+        "workspaceName": {
+            "value": "GAV-NE-INE-QA-LOGS-armdemo01"
+        },
+        "workspaceRegion": {
+            "value": "eastus"
+        },
+        "workspacesku": {
+            "value": "PerNode"
+        },
+        "keyVaultName": {
+            "value": "ravikvlt"
+        },
+        "objectId": {
+            "value": "8d35dc90-112c-4652-b59d-3c0557af41a6"
+        },
+        "servicePrincipalClientSecret": {
+            "value": "16172758-643e-4deb-8134-b2637b81ac6d"
+        },
+        "sqladministratorLogin": {
+            "value": "geinadmin"
+        },
+        "sqladministratorLoginPassword": {
+            "value": "admin@123"
+        },
+        "sqldblocation": {
+            "value": "northeurope"
+        },
+        "sqlserverName": {
+            "value": "gav-ne-ine-qa-postgresqo"
+        },
+        "sqlskuCapacity": {
+            "value": 2
+        },
+        "sqlskuFamily": {
+            "value": "Gen5"
+        },
+        "sqlskuName": {
+            "value": "GP_Gen5_2"
+        },
+        "sqlskuSizeMB": {
+            "value": 5120
+        },
+        "sqlskuTier": {
+            "value": "GeneralPurpose"
+        },
+        "sqlversion": {
+            "value": "9.6"
+        },
+        "sqlbackupRetentionDays": {
+            "value": 7
+        },
+        "sqlgeoRedundantBackup": {
+            "value": "Disabled"
+        },
+        "redisCacheName": {
+            "value": "rediscachesanarmdemo"
+        },
+        "redisCacheSKU": {
+            "value": "Standard"
+        },
+        "redisCacheFamily": {
+            "value": "C"
+        },
+        "redisCacheCapacity": {
+            "value": 1
+        },
+        "enableNonSslPort": {
+            "value": false
+        },
+        "diagnosticsEnabled": {
+            "value": false
+        },
+        "applicationGatewaylocation": {
+            "value": "northeurope"
+        },
+        "applicationGatewayName": {
+            "value": "GAV-CUS-INE-APP-GATEWAYarmtdemo"
+        },
+        "domainNameLabel": {
+            "value": "unqgeindnsdnv"
+        },
+        "applicationGatewaytier": {
+            "value": "Standard"
+        },
+        "applicationGatewayskuSize": {
+            "value": "Standard_Medium"
+        },
+        "applicationGatewaycapacity": {
+            "value": 2
+        },
+        "applicationGatewayfrontEndPort": {
+            "value": 80
+        },
+        "apgwsubnetName": {
+            "value": "app-gateway"
+        },
+        "applicationGatewayenableHttp2": {
+            "value": false
+        },
+        "applicationGatewayzones": {
+            "value": []
+        },
+      
+        "applicationGatewaypublicIpAddressName": {
+            "value": "gavpublicipaddressapg"
+        },
+        "agwsku": {
+            "value": "Basic"
+        },
+        "applicationGatewayallocationMethod": {
+            "value": "dynamic"
+        },
+        "applicationGatewaypublicIpZones": {
+            "value": []
+        },
+        "applicationGatewayidleTimeoutInMinutes": {
+            "value": 4
+        },
+        "acrName": {
+            "value": "incrnonqaarmpocv"
+        },
+        "acrAdminUserEnabled": {
+            "value": false
+        },
+        "acrSku": {
+            "value": "Basic"
+        },
+        "acrlocation": {
+            "value": "northeurope"
+        },
+        "aksResourceName": {
+            "value": "GAV-CU-INE-QA-AKS-armdemo01"
+        },
+        "aksLocation": {
+            "value": "northeurope"
+        },
+        "aksDnsPrefix": {
+            "value": "gavcuineqaaksarmdebm"
+        },
+        "aksAgentCount": {
+            "value": 3
+        },
+        "aksAgentVMSize": {
+            "value": "Standard_D2_v2"
+        },
+        "aksServicePrincipalClientId": {
+            "value": "f3a827d2-b32a-4c1e-89ed-0606b7038107"
+        },
+        "aksKubernetesVersion": {
+            "value": "1.11.5"
+        },
+        "aksEnableOmsAgent": {
+            "value": false
+        },
+        "aksEnableHttpApplicationRouting": {
+            "value": false
+        },
+        "aksNetworkPlugin": {
+            "value": "kubenet"
+        },
+        "aksMaxPods": {
+            "value": 30
+        },
+        "aksEnableRBAC": {
+            "value": true
+        },
+        "aksSSH": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/DWLnsCzgNo4rXoafDwXRjXBCIyX8m6sPJRVfDSmYgND739wQsfBF/B8RCyU1z+tjmOr+CZYCu6w2FmVL8JDY/aPJC9nDtO5aZSZtAdKJH51PwODsI8E4mthPuC01CxRageEDeEW9u4CCu3HXq6gFBscOEsC1iTYO5gsaxotiGdJS2pYnNHDVTWqhbzi7UPx8xPKJ1M8LKkG2paZLYBHKIhjrxjrAjnnsLkFb/dhfdr9D65Mqf5OGy40X1vQv+rfbLtnpb1DMajlfwQtBQpHY2SnEFbSwQva/l/chyhc4b854Uhpc1XdkIcQYiz7pRagRsJ1u5lMusCAsE5gnGoEJ vplauzon@MININT-BK6A5VR"
+        },
+        "baseUri": {
+            "value": "https://raw.githubusercontent.com/sandeephanu/CoolStuff/master/in"
+        }
+    }
+}

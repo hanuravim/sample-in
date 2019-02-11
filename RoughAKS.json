@@ -1,0 +1,707 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountType": {
+            "type": "string"
+        },
+        "storageAccountlocation": {
+            "type": "string"
+        },
+        "existingVNETName": {
+            "type": "string"
+        },
+        "newSubnetName": {
+            "type": "string"
+        },
+        "newSubnetAddressPrefix": {
+            "type": "string"
+        },
+        "subnetlocation": {
+            "type": "string"
+        },
+        "workspaceName": {
+            "type": "string"
+        },
+        "workspaceRegion": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string",
+            "allowedValues": [
+                "PerNode",
+                "PerGB2018",
+                "Standard",
+                "Free",
+                "Premium",
+                "Standalone",
+                "Unlimited"
+            ]
+        },
+        "keyVaultName": {
+            "type": "string"
+        },
+        "objectId": {
+            "type": "string"
+        },
+        "servicePrincipalClientSecret": {
+            "type": "securestring"
+        },
+        "sqladministratorLogin": {
+            "type": "string",
+            "defaultValue": "geinadmin"
+        },
+        "sqladministratorLoginPassword": {
+            "type": "securestring"
+        },
+        "sqldblocation": {
+            "type": "string",
+            "defaultValue": "northeurope"
+        },
+        "sqlserverName": {
+            "type": "string",
+            "defaultValue": "geinpostgrsdb"
+        },
+        "sqlskuCapacity": {
+            "type": "int",
+            "defaultValue": 2
+        },
+        "sqlskuFamily": {
+            "type": "string",
+            "defaultValue": "Gen5"
+        },
+        "sqlskuName": {
+            "type": "string",
+            "defaultValue": "GP_Gen5_2"
+        },
+        "sqlskuSizeMB": {
+            "type": "int",
+            "defaultValue": 5120
+        },
+        "sqlskuTier": {
+            "type": "string",
+            "defaultValue": "GeneralPurpose"
+        },
+        "sqlversion": {
+            "type": "string",
+            "defaultValue": "9.6"
+        },
+        "sqlbackupRetentionDays": {
+            "type": "int",
+            "defaultValue": 7
+        },
+        "sqlgeoRedundantBackup": {
+            "type": "string",
+            "defaultValue": "Disabled"
+        },
+        "redisCacheName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Azure Redis Cache to create."
+            }
+        },
+        "redisCacheSKU": {
+            "type": "string",
+            "allowedValues": [
+                "Basic",
+                "Standard",
+                "Premium"
+            ],
+            "defaultValue": "Standard",
+            "metadata": {
+                "description": "The pricing tier of the new Azure Redis Cache."
+            }
+        },
+        "redisCacheFamily": {
+            "type": "string",
+            "defaultValue": "C",
+            "metadata": {
+                "description": "The family for the sku."
+            },
+            "allowedValues": [
+                "C",
+                "P"
+            ]
+        },
+        "redisCacheCapacity": {
+            "type": "int",
+            "allowedValues": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "defaultValue": 1,
+            "metadata": {
+                "description": "The size of the new Azure Redis Cache instance. "
+            }
+        },
+        "enableNonSslPort": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "A boolean value that indicates whether to allow access via non-SSL ports."
+            }
+        },
+        "diagnosticsEnabled": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "A value that indicates whether diagnostics should be saved to the specified storage account."
+            }
+        },
+        "diagnosticStorageAccountName": {
+            "type": "string",
+            "defaultValue": "geinstorageaccount"
+        },
+        "applicationGatewaylocation": {
+            "type": "string",
+            "defaultValue": "northeurope"
+        },
+        "applicationGatewayName": {
+            "type": "string",
+            "defaultValue": "GE-IN-Gateway"
+        },
+        "applicationGatewaytier": {
+            "type": "string",
+            "defaultValue": "WAF"
+        },
+        "applicationGatewayskuSize": {
+            "type": "string",
+            "defaultValue": "WAF_Medium"
+        },
+        "applicationGatewaycapacity": {
+            "defaultValue": 2,
+            "type": "int"
+        },
+        "applicationGatewayfrontEndPort": {
+            "type": "int",
+            "defaultValue": 80
+        },
+        "apgwsubnetName": {
+            "type": "string",
+            "defaultValue": "Default"
+        },
+        "applicationGatewayenableHttp2": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "applicationGatewayzones": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "applicationGatewaypublicIpAddressName": {
+            "type": "string",
+            "defaultValue": "geingwpip"
+        },
+        "agwsku": {
+            "type": "string",
+            "defaultValue": "Basic"
+        },
+        "applicationGatewayallocationMethod": {
+            "type": "string",
+            "defaultValue": "dynamic"
+        },
+        "applicationGatewaypublicIpZones": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "applicationGatewayidleTimeoutInMinutes": {
+            "type": "int",
+            "defaultValue": 4
+        },
+        "applicationGatewayvirtualNetworkRG": {
+            "type": "string",
+            "defaultValue": "Sandeep-GE-IN-RG"
+        },
+        "applicationGatewayvirtualNetworkName": {
+            "type": "string",
+            "defaultValue": "geinvnet"
+        },
+        "aksResourceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Managed Cluster resource."
+            }
+        },
+        "aksLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "The location of AKS resource."
+            }
+        },
+        "aksDnsPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Optional DNS prefix to use with hosted Kubernetes API server FQDN."
+            }
+        },
+        "aksOsDiskSizeGB": {
+            "type": "int",
+            "defaultValue": 0,
+            "metadata": {
+                "description": "Disk size (in GB) to provision for each of the agent pool nodes. This value ranges from 0 to 1023. Specifying 0 will apply the default disk size for that agentVMSize."
+            },
+            "minValue": 0,
+            "maxValue": 1023
+        },
+        "aksAgentCount": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "The number of agent nodes for the cluster."
+            },
+            "minValue": 1,
+            "maxValue": 50
+        },
+        "aksAgentVMSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2_v2",
+            "metadata": {
+                "description": "The size of the Virtual Machine."
+            }
+        },
+        "aksServicePrincipalClientId": {
+            "metadata": {
+                "description": "Client ID (used by cloudprovider)"
+            },
+            "type": "securestring"
+        },
+        "aksServicePrincipalClientSecret": {
+            "metadata": {
+                "description": "The Service Principal Client Secret."
+            },
+            "type": "securestring"
+        },
+        "aksOsType": {
+            "type": "string",
+            "defaultValue": "Linux",
+            "allowedValues": [
+                "Linux"
+            ],
+            "metadata": {
+                "description": "The type of operating system."
+            }
+        },
+        "aksKubernetesVersion": {
+            "type": "string",
+            "defaultValue": "1.7.7",
+            "metadata": {
+                "description": "The version of Kubernetes."
+            }
+        },
+        "aksEnableOmsAgent": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "boolean flag to turn on and off of omsagent addon"
+            }
+        },
+        "aksWorkspaceRegion": {
+            "type": "string",
+            "defaultValue": "East US",
+            "metadata": {
+                "description": "Specify the region for your OMS workspace"
+            }
+        },
+        "aksWorkspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the name of the OMS workspace"
+            }
+        },
+        "aksOmsWorkspaceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the resource id of the OMS workspace"
+            }
+        },
+        "aksOmsSku": {
+            "type": "string",
+            "defaultValue": "standalone",
+            "allowedValues": [
+                "free",
+                "standalone",
+                "pernode"
+            ],
+            "metadata": {
+                "description": "Select the SKU for your workspace"
+            }
+        },
+        "aksEnableHttpApplicationRouting": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "boolean flag to turn on and off of http application routing"
+            }
+        },
+        "aksNetworkPlugin": {
+            "type": "string",
+            "allowedValues": [
+                "azure",
+                "kubenet"
+            ],
+            "metadata": {
+                "description": "Network plugin used for building Kubernetes network."
+            }
+        },
+        "aksMaxPods": {
+            "type": "int",
+            "defaultValue": 30,
+            "metadata": {
+                "description": "Maximum number of pods that can run on a node."
+            }
+        },
+        "aksEnableRBAC": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "boolean flag to turn on and off of RBAC"
+            }
+        },
+        "baseUri": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/hanuravim/demo-in/master",
+            "metadata": {
+                "description": "Location of ARM templates"
+            }
+        }
+    },
+    "variables": {
+        "storageAccountTemplateURL": "[concat(parameters('baseUri'),'/StaorgeAccount.json')]",
+        "subnetTemplateURL": "[concat(parameters('baseUri'),'/subnet.json')]",
+        "LogAnalyticsWorkspaceTemplateURL": "[concat(parameters('baseUri'),'/LogAnalyticsWorkspace.json')]",
+        "keyVaultTemplateURL": "[concat(parameters('baseUri'),'/keyVault.json')]",
+        "PostgresSQLTemplateURL": "[concat(parameters('baseUri'),'/NewPostgreSqlServer.json')]",
+        "RedisCacheTemplateURL": "[concat(parameters('baseUri'),'/RedisCache.json')]",
+        "AppGatewayTemplateURL": "[concat(parameters('baseUri'),'/AppGateway.json')]",
+        "AzureFile-ShareTemplateURL": "[concat(parameters('baseUri'),'/AzureFile-Share.json')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "StorageAccount",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('storageAccountTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountType": {
+                        "value": "[parameters('storageAccountType')]"
+                    },
+                    "storageAccountlocation": {
+                        "value": "[parameters('storageAccountlocation')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "Subnet",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('subnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "existingVNETName": {
+                        "value": "[parameters('existingVNETName')]"
+                    },
+                    "newSubnetName": {
+                        "value": "[parameters('newSubnetName')]"
+                    },
+                    "newSubnetAddressPrefix": {
+                        "value": "[parameters('newSubnetAddressPrefix')]"
+                    },
+                    "subnetlocation": {
+                        "value": "[parameters('subnetlocation')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "LogAnalyticsWorkspace",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('LogAnalyticsWorkspaceTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "workspaceRegion": {
+                        "value": "[parameters('workspaceRegion')]"
+                    },
+                    "sku": {
+                        "value": "[parameters('sku')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "keyVault",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('keyVaultTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "objectId": {
+                        "value": "[parameters('objectId')]"
+                    },
+                    "servicePrincipalClientSecret": {
+                        "value": "[parameters('servicePrincipalClientSecret')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "PostgresSQL",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('PostgresSQLTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqladministratorLogin": {
+                        "value": "[parameters('sqladministratorLogin')]"
+                    },
+                    "sqladministratorLoginPassword": {
+                        "value": "[parameters('sqladministratorLoginPassword')]"
+                    },
+                    "sqldblocation": {
+                        "value": "[parameters('sqldblocation')]"
+                    },
+                    "sqlserverName": {
+                        "value": "[parameters('sqlserverName')]"
+                    },
+                    "sqlskuCapacity": {
+                        "value": "[parameters('sqlskuCapacity')]"
+                    },
+                    "sqlskuFamily": {
+                        "value": "[parameters('sqlskuFamily')]"
+                    },
+                    "sqlskuName": {
+                        "value": "[parameters('sqlskuName')]"
+                    },
+                    "sqlskuSizeMB": {
+                        "value": "[parameters('sqlskuSizeMB')]"
+                    },
+                    "sqlskuTier": {
+                        "value": "[parameters('sqlskuTier')]"
+                    },
+                    "sqlversion": {
+                        "value": "[parameters('sqlversion')]"
+                    },
+                    "sqlbackupRetentionDays": {
+                        "value": "[parameters('sqlbackupRetentionDays')]"
+                    },
+                    "sqlgeoRedundantBackup": {
+                        "value": "[parameters('sqlgeoRedundantBackup')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "RedisCache",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('RedisCacheTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "redisCacheName": {
+                        "value": "[parameters('redisCacheName')]"
+                    },
+                    "redisCacheSKU": {
+                        "value": "[parameters('redisCacheSKU')]"
+                    },
+                    "redisCacheFamily": {
+                        "value": "[parameters('redisCacheFamily')]"
+                    },
+                    "redisCacheCapacity": {
+                        "value": "[parameters('redisCacheCapacity')]"
+                    },
+                    "enableNonSslPort": {
+                        "value": "[parameters('enableNonSslPort')]"
+                    },
+                    "diagnosticsEnabled": {
+                        "value": "[parameters('diagnosticsEnabled')]"
+                    },
+                    "diagnosticStorageAccountName": {
+                        "value": "[parameters('diagnosticStorageAccountName')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AppGateway",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('AppGatewayTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "applicationGatewaylocation": {
+                        "value": "[parameters('applicationGatewaylocation')]"
+                    },
+                    "applicationGatewayName": {
+                        "value": "[parameters('applicationGatewayName')]"
+                    },
+                    "applicationGatewaytier": {
+                        "value": "[parameters('applicationGatewaytier')]"
+                    },
+                    "applicationGatewayskuSize": {
+                        "value": "[parameters('applicationGatewayskuSize')]"
+                    },
+                    "applicationGatewaycapacity": {
+                        "value": "[parameters('applicationGatewaycapacity')]"
+                    },
+                    "applicationGatewayfrontEndPort": {
+                        "value": "[parameters('applicationGatewayfrontEndPort')]"
+                    },
+                    "apgwsubnetName": {
+                        "value": "[parameters('apgwsubnetName')]"
+                    },
+                    "applicationGatewayenableHttp2": {
+                        "value": "[parameters('applicationGatewayenableHttp2')]"
+                    },
+                    "applicationGatewayzones": {
+                        "value": "[parameters('applicationGatewayzones')]"
+                    },
+                    "applicationGatewaypublicIpAddressName": {
+                        "value": "[parameters('applicationGatewaypublicIpAddressName')]"
+                    },
+                    "agwsku": {
+                        "value": "[parameters('agwsku')]"
+                    },
+                    "applicationGatewayallocationMethod": {
+                        "value": "[parameters('applicationGatewayallocationMethod')]"
+                    },
+                    "applicationGatewaypublicIpZones": {
+                        "value": "[parameters('applicationGatewaypublicIpZones')]"
+                    },
+                    "applicationGatewayidleTimeoutInMinutes": {
+                        "value": "[parameters('applicationGatewayidleTimeoutInMinutes')]"
+                    },
+                    "applicationGatewayvirtualNetworkRG": {
+                        "value": "[parameters('applicationGatewayvirtualNetworkRG')]"
+                    },
+                    "applicationGatewayvirtualNetworkName": {
+                        "value": "[parameters('applicationGatewayvirtualNetworkName')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2018-03-31",
+            "dependsOn": [],
+            "type": "Microsoft.ContainerService/managedClusters",
+            "location": "[parameters('aksLocation')]",
+            "name": "[parameters('aksResourceName')]",
+            "properties": {
+                "kubernetesVersion": "[parameters('aksKubernetesVersion')]",
+                "enableRBAC": "[parameters('aksEnableRBAC')]",
+                "dnsPrefix": "[parameters('aksDnsPrefix')]",
+                "addonProfiles": {
+                    "httpApplicationRouting": {
+                        "enabled": "[parameters('aksEnableHttpApplicationRouting')]"
+                    },
+                    "omsagent": {
+                        "enabled": "[parameters('aksEnableOmsAgent')]",
+                        "config": {
+                            "logAnalyticsWorkspaceResourceID": "[parameters('AksOmsWorkspaceId')]"
+                        }
+                    }
+                },
+                "agentPoolProfiles": [
+                    {
+                        "name": "agentpool",
+                        "osDiskSizeGB": "[parameters('aksOsDiskSizeGB')]",
+                        "count": "[parameters('aksAgentCount')]",
+                        "vmSize": "[parameters('aksAgentVMSize')]",
+                        "osType": "[parameters('aksOsType')]",
+                        "storageProfile": "ManagedDisks"
+                    }
+                ],
+                "servicePrincipalProfile": {
+                    "ClientId": "[parameters('aksServicePrincipalClientId')]",
+                    "Secret": "[parameters('aksServicePrincipalClientSecret')]"
+                },
+                "networkProfile": {
+                    "networkPlugin": "[parameters('aksNetworkPlugin')]"
+                }
+            },
+            "tags": {
+                "GE-IN": "NOO"
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "SolutionDeployment",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[split(parameters('aksOmsWorkspaceId'),'/')[4]]",
+            "subscriptionId": "[split(parameters('aksOmsWorkspaceId'),'/')[2]]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "apiVersion": "2015-11-01-preview",
+                            "type": "Microsoft.OperationsManagement/solutions",
+                            "location": "[parameters('aksWorkspaceRegion')]",
+                            "name": "[concat('ContainerInsights', '(', split(parameters('aksOmsWorkspaceId'),'/')[8], ')')]",
+                            "properties": {
+                                "workspaceResourceId": "[parameters('aksOmsWorkspaceId')]"
+                            },
+                            "plan": {
+                                "name": "[concat('ContainerInsights', '(', split(parameters('aksOmsWorkspaceId'),'/')[8], ')')]",
+                                "product": "[concat('OMSGallery/', 'ContainerInsights')]",
+                                "promotionCode": "",
+                                "publisher": "Microsoft"
+                            }
+                        }
+                    ]
+                }
+            },
+            "dependsOn": []
+        }
+    ],
+    "outputs": {
+        "controlPlaneFQDN": {
+            "type": "string",
+            "value": "[reference(concat('Microsoft.ContainerService/managedClusters/', parameters('aksResourceName'))).fqdn]"
+        }
+    }
+}

@@ -1,0 +1,219 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountName": {
+            "value": "geinstorage"
+        },
+        "storageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "aksEnableOmsAgent": {
+            "value": false
+        },
+        "storageAccountlocation": {
+            "value": "northeurope"
+        },
+        "VnetName": {
+            "value": "geinaksvnet"
+        },
+        "workspaceName": {
+            "value": "geainlaoms"
+        },
+        "workspaceRegion": {
+            "value": "eastus"
+        },
+        "workspacesku": {
+            "value": "PerNode"
+        },
+        "keyVaultName": {
+            "value": "geinkv"
+        },
+        "keyVaultSecretName": {
+            "value": "clientsecret"
+        },
+        "objectId": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "servicePrincipalClientSecret": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "sqladministratorLogin": {
+            "value": "geinadmin"
+        },
+        "sqladministratorLoginPassword": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "sqldblocation": {
+            "value": "northeurope"
+        },
+        "sqlserverName": {
+            "value": "geinpostgrsdb"
+        },
+        "sqlskuCapacity": {
+            "value": 2
+        },
+        "sqlskuFamily": {
+            "value": "Gen5"
+        },
+        "sqlskuName": {
+            "value": "GP_Gen5_2"
+        },
+        "sqlskuSizeMB": {
+            "value": 5120
+        },
+        "sqlskuTier": {
+            "value": "GeneralPurpose"
+        },
+        "sqlversion": {
+            "value": "9.6"
+        },
+        "sqlbackupRetentionDays": {
+            "value": 7
+        },
+        "sqlgeoRedundantBackup": {
+            "value": "Disabled"
+        },
+        "redisCacheName": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "redisCacheSKU": {
+            "value": "Standard"
+        },
+        "redisCacheFamily": {
+            "value": "C"
+        },
+        "redisCacheCapacity": {
+            "value": 1
+        },
+        "enableNonSslPort": {
+            "value": false
+        },
+        "diagnosticsEnabled": {
+            "value": false
+        },
+        "applicationGatewaylocation": {
+            "value": "northeurope"
+        },
+        "applicationGatewayName": {
+            "value": "GE-IN-Gateway"
+        },
+        "domainNameLabel": {
+            "value": ""
+        },
+        "applicationGatewaytier": {
+            "value": "WAF"
+        },
+        "applicationGatewayskuSize": {
+            "value": "WAF_Medium"
+        },
+        "applicationGatewaycapacity": {
+            "value": 2
+        },
+        "applicationGatewayfrontEndPort": {
+            "value": 80
+        },
+        "apgwsubnetName": {
+            "value": "app-gateway"
+        },
+        "applicationGatewayenableHttp2": {
+            "value": false
+        },
+        "applicationGatewayzones": {
+            "value": []
+        },
+        "applicationGatewaypublicIpAddressName": {
+            "value": "geingwpip"
+        },
+        "agwsku": {
+            "value": "Basic"
+        },
+        "applicationGatewayallocationMethod": {
+            "value": "dynamic"
+        },
+        "applicationGatewaypublicIpZones": {
+            "value": []
+        },
+        "applicationGatewayidleTimeoutInMinutes": {
+            "value": 4
+        },
+        "acrName": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "acrAdminUserEnabled": {
+            "value": false
+        },
+        "acrSku": {
+            "value": "Basic"
+        },
+        "acrlocation": {
+            "value": "northeurope"
+        },
+        "aksResourceName": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "aksLocation": {
+            "value": "northeurope"
+        },
+        "aksDnsPrefix": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "aksAgentCount": {
+            "value": 3
+        },
+        "aksAgentVMSize": {
+            "value": "Standard_D2_v2"
+        },
+        "aksServicePrincipalClientId": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "aksKubernetesVersion": {
+            "value": "1.11.5"
+        },
+        "aksEnableHttpApplicationRouting": {
+            "value": false
+        },
+        "aksNetworkPlugin": {
+            "value": "kubenet"
+        },
+        "aksMaxPods": {
+            "value": 30
+        },
+        "aksEnableRBAC": {
+            "value": true
+        },
+        "aksSSH": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/DWLnsCzgNo4rXoafDwXRjXBCIyX8m6sPJRVfDSmYgND739wQsfBF/B8RCyU1z+tjmOr+CZYCu6w2FmVL8JDY/aPJC9nDtO5aZSZtAdKJH51PwODsI8E4mthPuC01CxRageEDeEW9u4CCu3HXq6gFBscOEsC1iTYO5gsaxotiGdJS2pYnNHDVTWqhbzi7UPx8xPKJ1M8LKkG2paZLYBHKIhjrxjrAjnnsLkFb/dhfdr9D65Mqf5OGy40X1vQv+rfbLtnpb1DMajlfwQtBQpHY2SnEFbSwQva/l/chyhc4b854Uhpc1XdkIcQYiz7pRagRsJ1u5lMusCAsE5gnGoEJ vplauzon@MININT-BK6A5VR"
+        },
+        "baseUri": {
+            "value": "https://raw.githubusercontent.com/sandeephanu/CoolStuff/master/in"
+        },
+        "keyVaultResourceGroupName": {
+            "value": "GAV-NE-INE-NP-QA-ARM-POC"
+        },
+        "existingkeyvaultName": {
+            "value": "gav-cu-ine-dev-kvrmdemo"
+        },
+        "automationaccountName": {
+            "value": "gavinautomationaccount"
+        },
+        "runbookName": {
+            "value": "dbrunbook"
+        },
+        "runbookDescription": {
+            "value": "gav-cu-ine-dev-kvrmdemo"
+        },
+        "automationaccountsku": {
+            "value": "gav-cu-ine-dev-kvrmdemo"
+        },
+        "serviceBusNamespaceName": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "namespaceAuthorizationRuleName": {
+            "value": "## TO BE DEFINED ##"
+        },
+        "sblocation": {
+            "value": "northeurope"
+        }
+    }
+}

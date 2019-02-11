@@ -1,0 +1,233 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "applicationGatewaylocation": {
+            "type": "string",
+            "defaultValue": "northeurope"
+        },
+        "applicationGatewayName": {
+            "type": "string",
+            "defaultValue": "GE-IN-Gateway"
+        },
+        "domainNameLabel": {
+            "type": "string",
+            "defaultValue": "uniqdnslbl"
+        },
+        "applicationGatewaytier": {
+            "type": "string",
+            "defaultValue": "WAF"
+        },
+        "applicationGatewayskuSize": {
+            "type": "string",
+            "defaultValue": "WAF_Medium"
+        },
+        "applicationGatewaycapacity": {
+            "defaultValue": 2,
+            "type": "int"
+        },
+        "applicationGatewayfrontEndPort": {
+            "type": "int",
+            "defaultValue": 80
+        },
+        "apgwsubnetName": {
+            "type": "string",
+            "defaultValue": "app-gateway"
+        },
+        "applicationGatewayenableHttp2": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "applicationGatewayzones": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "applicationGatewaypublicIpAddressName": {
+            "type": "string",
+            "defaultValue": "geingwpip"
+        },
+        "agwsku": {
+            "type": "string",
+            "defaultValue": "Basic"
+        },
+        "applicationGatewayallocationMethod": {
+            "type": "string",
+            "defaultValue": "dynamic"
+        },
+        "applicationGatewaypublicIpZones": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "applicationGatewayidleTimeoutInMinutes": {
+            "type": "Int",
+            "defaultValue": 4
+        },
+        "VnetName": {
+            "type": "string",
+            "defaultValue": "geinvnet"
+        }
+    },
+    "variables": {
+        "vnetId": "[resourceId(resourcegroup().name,'Microsoft.Network/virtualNetworks', parameters('VnetName'))]",
+        "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('applicationGatewaypublicIpAddressName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('apgwsubnetName'))]",
+        "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewayName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/applicationGateways",
+            "name": "[parameters('applicationGatewayName')]",
+            "apiVersion": "2018-08-01",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "sku": {
+                    "name": "[parameters('applicationGatewayskuSize')]",
+                    "tier": "[parameters('applicationGatewaytier')]",
+                    "capacity": "[parameters('applicationGatewaycapacity')]"
+                },
+                "gatewayIPConfigurations": [
+                    {
+                        "name": "appGatewayIpConfig",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendIPConfigurations": [
+                    {
+                        "name": "appGatewayFrontendIP",
+                        "type": "Microsoft.Network/applicationGateways/frontendIPConfigurations",
+                        "properties": {
+                            "PublicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('applicationGatewaypublicIpAddressName'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "gateway-private",
+                        "type": "Microsoft.Network/applicationGateways/frontendIPConfigurations",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendPorts": [
+                    {
+                        "name": "appGatewayFrontendPort",
+                        "properties": {
+                            "Port": 80
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "appGatewayBackendPool",
+                        "properties": {
+                            "BackendAddresses": [
+                                {
+                                    "ipAddress": "10.240.1.10"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "backendHttpSettingsCollection": [
+                    {
+                        "name": "appGatewayBackendHttpSettings",
+                        "properties": {
+                            "Port": 80,
+                            "Protocol": "Http",
+                            "CookieBasedAffinity": "Disabled",
+                            "requestTimeout": 30,
+                            "cookieBasedAffinity": "Disabled",
+                            "hostName": null,
+                            "pickHostNameFromBackendAddress": false,
+                            "affinityCookieName": "ApplicationGatewayAffinity"
+                        }
+                    }
+                ],
+                "httpListeners": [
+                    {
+                        "name": "appGatewayHttpListener",
+                        "properties": {
+                            "FrontendIPConfiguration": {
+                                "Id": "[concat(variables('applicationGatewayID'), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+                            },
+                            "FrontendPort": {
+                                "Id": "[concat(variables('applicationGatewayID'), '/frontendPorts/appGatewayFrontendPort')]"
+                            },
+                            "Protocol": "Http",
+                            "SslCertificate": null
+                        }
+                    }
+                ],
+                "requestRoutingRules": [
+                    {
+                        "Name": "rule1",
+                        "properties": {
+                            "RuleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpListener')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[concat(variables('applicationGatewayID'), '/backendAddressPools/appGatewayBackendPool')]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "nginx-probe",
+                        "properties": {
+                            "protocol": "Http",
+                            "host": "nginx-probe",
+                            "path": "/api/v1/status",
+                            "interval": 30,
+                            "timeout": 300,
+                            "unhealthyThreshold": 3,
+                            "pickHostNameFromBackendHttpSettings": false,
+                            "minServers": 0,
+                            "match": {
+                                "body": "",
+                                "statusCodes": [
+                                    "200-399"
+                                ]
+                            }
+                        },
+                        "type": "Microsoft.Network/applicationGateways/probes"
+                    }
+                ],
+                "enableHttp2": false
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', parameters('applicationGatewaypublicIpAddressName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+                "name": "Basic",
+                "tier": "Regional"
+            },
+            "name": "[parameters('applicationGatewaypublicIpAddressName')]",
+            "apiVersion": "2018-08-01",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "[parameters('applicationGatewayallocationMethod')]",
+                "idleTimeoutInMinutes": "[parameters('applicationGatewayidleTimeoutInMinutes')]",
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('domainNameLabel')]",
+                    "fqdn": "[concat(parameters('domainNameLabel'),'.northeurope.cloudapp.azure.com')]"
+                }
+            }
+        }
+    ]
+}
